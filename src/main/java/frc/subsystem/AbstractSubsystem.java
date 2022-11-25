@@ -32,9 +32,8 @@ public abstract class AbstractSubsystem implements Runnable, AutoCloseable {
         this(period, Constants.DEFAULT_PERIODS_PER_LOG);
     }
 
-    public abstract void selfTest();
-
-    public abstract void logData();
+    public void selfTest() {}
+    public void logData() {}
 
     public void logData(@NotNull String key, @NotNull Object value) {
         NetworkTableInstance.getDefault().getEntry(key).setValue(value);
