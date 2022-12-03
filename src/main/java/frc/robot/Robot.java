@@ -8,7 +8,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.subsystem.AbstractSubsystem;
+import frc.subsystem.Intake;
+import frc.utility.Controller;
 
 
 /**
@@ -83,16 +85,37 @@ public class Robot extends TimedRobot
                 break;
         }
     }
+
+    private static Controller controller = new Controller(0);
+    private static Intake intake = new Intake(-1, -1);
+
     
     
     /** This method is called once when teleop is enabled. */
     @Override
-    public void teleopInit() {}
+    public void teleopInit() {
+        controller.update();
+        if(controller.getRisingEdge(3)){
+            intake.openIntake();
+        } else if(controller.getRisingEdge(4)){
+            intake.closeIntake();
+        }
+
+        if(controller.getRisingEdge(1)){
+            Intake.reverseIntake();
+        }
+
+        if(controller.getRisingEdge(2)){
+            Intake.controlIntake();
+        }
+    }
     
-    
+
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+
+    }
     
     
     /** This method is called once when the robot is disabled. */
